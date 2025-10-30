@@ -1,0 +1,18 @@
+# Core data tools
+pandas==2.2.3
+numpy==2.1.2
+
+# Database tools
+sqlalchemy==2.0.36
+psycopg2-binary==2.9.9
+
+# Kafka tools
+confluent-kafka==2.3.0
+
+# Visualization and dashboard
+streamlit==1.39.0
+plotly==5.24.1
+streamlit-autorefresh==1.0.1
+
+# Optional but recommended
+python-dotenv==1.0.1
