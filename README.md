@@ -49,20 +49,12 @@ chmod +x script.sh
 This will:
 - ✅ Create Python virtual environment
 - ✅ Install all Python dependencies from requirements.txt
+- ✅ Automatically initializes the database with the correct schema
 - ✅ Start all Docker services using docker-compose:
   - PostgreSQL database
   - Zookeeper
   - Kafka broker
   - Kafka UI
-
-### 2. Initialize Database
-
-Create the database table:
-
-```bash
-source venv/bin/activate
-python init_database.py
-```
 
 ### 3. Run the Pipeline
 
@@ -96,9 +88,6 @@ Once everything is running, you can access:
 - **Streamlit Dashboard**: http://localhost:8501
 - **Kafka UI**: http://localhost:8080
 - **PostgreSQL**: localhost:5432
-  - Database: `uberdb`
-  - User: `user`
-  - Password: `password`
 
 ## 📊 Features
 
@@ -106,7 +95,6 @@ Once everything is running, you can access:
 - **Live map visualization**: Shows ride pickup locations
 - **Auto-refresh dashboard**: Updates every 5 seconds
 - **Metrics tracking**: Total rides, passengers, and timestamps
-- **Base distribution**: Bar chart showing rides per base (if available)
 
 ## 🧹 Cleanup
 
@@ -139,53 +127,32 @@ Core Python packages (see `requirements.txt`):
 - plotly==5.24.1
 - streamlit-autorefresh==1.0.1
 
+## 📊 What's Happening Behind the Scenes?
+
+```
+┌─────────────┐      ┌───────┐      ┌──────────┐      ┌──────────────┐      ┌───────────┐
+│ uber_sample │ ───> │ Kafka │ ───> │  Kafka   │ ───> │  PostgreSQL  │ ───> │ Streamlit │
+│   .csv      │      │ Topic │      │ Consumer │      │   Database   │      │ Dashboard │
+└─────────────┘      └───────┘      └──────────┘      └──────────────┘      └───────────┘
+     Producer          rides_raw       Stores data       rides table         Visualizes
+```
+
+---
+
+
 ## 🔧 Troubleshooting
 
-### Services not starting
+### Issue: "Module not found"
+**Solution:** Make sure virtual environment is activated:
 ```bash
-# Check service status
-docker-compose ps
-
-# View logs for specific service
-docker-compose logs kafka
-docker-compose logs postgres
-docker-compose logs zookeeper
+source .venv/bin/activate
+pip install -r requirements.txt
 ```
 
-### Kafka connection issues
-```bash
-# Restart Kafka services
-docker-compose restart kafka zookeeper
+### Issue: Dashboard shows no data
+**Solution:** Make sure producer and consumer are both running before starting the dashboard
 
-# Check Kafka is accessible
-docker-compose exec kafka kafka-topics --list --bootstrap-server localhost:9092
-```
-
-### Database connection issues
-```bash
-# Check PostgreSQL is running
-docker-compose ps postgres
-
-# Connect to database manually
-docker-compose exec postgres psql -U user -d uberdb
-```
-
-### Port conflicts
-If ports are in use, modify the port mappings in `docker-compose.yml`:
-```yaml
-ports:
-  - "NEW_PORT:CONTAINER_PORT"
-```
-
-### Reset everything
-```bash
-# Stop and remove all containers and volumes
-docker-compose down -v
-
-# Re-run setup
-./script.sh
-python init_database.py
-```
+---
 
 ## 📝 Notes
 
@@ -193,6 +160,17 @@ python init_database.py
 - The consumer stores all incoming messages in PostgreSQL
 - The dashboard auto-refreshes every 5 seconds to show new data
 - Data is cached for 5 seconds to improve performance
+
+## 📝 Quick Reference
+
+| Component | Command | URL |
+|-----------|---------|-----|
+| Setup | `./script.sh` | - |
+| Producer | `python producer/producer.py` | - |
+| Consumer | `python consumer/consumer.py` | - |
+| Dashboard | `streamlit run dashboard/app.py` | http://localhost:8501 |
+| Kafka UI | - | http://localhost:8080 |
+| Stop All | `docker-compose down` | - |
 
 ## 🤝 Contributing
 
