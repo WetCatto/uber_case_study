@@ -63,21 +63,21 @@ Open **3 separate terminal windows** and run each component:
 #### Terminal 1: Start Producer
 ```bash
 cd /path/to/uber_case_study
-source venv/bin/activate
+source .venv/bin/activate
 python producer/producer.py
 ```
 
 #### Terminal 2: Start Consumer
 ```bash
 cd /path/to/uber_case_study
-source venv/bin/activate
+source .venv/bin/activate
 python consumer/consumer.py
 ```
 
 #### Terminal 3: Start Dashboard
 ```bash
 cd /path/to/uber_case_study
-source venv/bin/activate
+source .venv/bin/activate
 streamlit run dashboard/app.py
 ```
 
