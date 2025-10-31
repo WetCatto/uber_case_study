@@ -78,7 +78,7 @@ docker exec kafka kafka-topics \
 
 3. Create Python Environment
 ```Bash
-python -m venv .venv
+python3 -m venv .venv
 ```
 4. Activate Environment
 Windows
