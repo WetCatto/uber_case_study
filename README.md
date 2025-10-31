@@ -5,8 +5,13 @@ A real-time data streaming pipeline that simulates Uber ride data using Kafka, P
 ## 📋 Architecture
 
 ```
-CSV Data → Kafka Producer → Kafka Topic → Kafka Consumer → PostgreSQL → Streamlit Dashboard
+┌─────────────┐      ┌───────┐      ┌──────────┐      ┌──────────────┐      ┌───────────┐
+│ uber_sample │ ───> │ Kafka │ ───> │  Kafka   │ ───> │  PostgreSQL  │ ───> │ Streamlit │
+│   .csv      │      │ Topic │      │ Consumer │      │   Database   │      │ Dashboard │
+└─────────────┘      └───────┘      └──────────┘      └──────────────┘      └───────────┘
+     Producer          rides_raw       Stores data       rides table         Visualizes
 ```
+
 
 ## 🛠️ Tech Stack
 
@@ -126,19 +131,6 @@ Core Python packages (see `requirements.txt`):
 - streamlit==1.39.0
 - plotly==5.24.1
 - streamlit-autorefresh==1.0.1
-
-## 📊 What's Happening Behind the Scenes?
-
-```
-┌─────────────┐      ┌───────┐      ┌──────────┐      ┌──────────────┐      ┌───────────┐
-│ uber_sample │ ───> │ Kafka │ ───> │  Kafka   │ ───> │  PostgreSQL  │ ───> │ Streamlit │
-│   .csv      │      │ Topic │      │ Consumer │      │   Database   │      │ Dashboard │
-└─────────────┘      └───────┘      └──────────┘      └──────────────┘      └───────────┘
-     Producer          rides_raw       Stores data       rides table         Visualizes
-```
-
----
-
 
 ## 🔧 Troubleshooting
 
