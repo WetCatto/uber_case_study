@@ -9,7 +9,7 @@ engine = create_engine(DB_URI)
 
 # Kafka Consumer configuration
 conf = {
-    'bootstrap.servers': 'localhost:9092',  # ← NOT "kafka:9092"
+    'bootstrap.servers': 'localhost:9092', 
     'group.id': 'uber-group',
     'auto.offset.reset': 'earliest',
     'enable.auto.commit': True
@@ -35,7 +35,6 @@ try:
         
         if msg.error():
             if msg.error().code() == KafkaError._PARTITION_EOF:
-                # End of partition
                 continue
             else:
                 print(f"❌ Consumer error: {msg.error()}")
@@ -50,11 +49,9 @@ try:
         
         stored_count += 1
         
-        # Print progress every 10 messages
         if stored_count % 10 == 0:
             print(f"💾 Stored {stored_count} rides...")
         
-        # Uncomment to see each message
         print(f"Stored: {data}")
 
 except KeyboardInterrupt:

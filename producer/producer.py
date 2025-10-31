@@ -2,7 +2,7 @@ import time
 import json
 import pandas as pd
 from confluent_kafka import Producer
-import random  # <--- 1. Import random
+import random  
 
 # Kafka Producer configuration
 KAFKA_BROKER = "localhost:9092" 
@@ -25,18 +25,15 @@ def delivery_report(err, msg):
     """Callback for message delivery reports"""
     if err is not None:
         print(f'❌ Message delivery failed: {err}')
-    # Uncomment to see delivery confirmations
-    # else:
-    #     print(f'✅ Message delivered to {msg.topic()} [{msg.partition()}]')
+    else:
+        print(f'✅ Message delivered to {msg.topic()} [{msg.partition()}]')
 
 print("🚗 Kafka Producer started. Streaming Uber ride data...")
 print(f"📊 Sending to topic: {TOPIC_NAME}")
 print("-" * 60)
 
-# --- 2. New batch-sending logic ---
 total_sent = 0
 batch_sent_count = 0
-# Get the first random batch size
 current_batch_size = random.randint(5, 15)
 
 for _, row in df.iterrows():
@@ -47,7 +44,6 @@ for _, row in df.iterrows():
         "passenger_count": int(row["passenger_count"])
     }
     
-    # Include base column if present in dataset
     if "base" in df.columns:
         message["base"] = str(row["base"])
     
@@ -64,19 +60,15 @@ for _, row in df.iterrows():
     batch_sent_count += 1
     total_sent += 1
     
-    # Check if we've completed the current random batch
     if batch_sent_count == current_batch_size:
         print(f"📤 Flushed batch of {batch_sent_count} messages. (Total: {total_sent})")
         producer.flush()
         
-        # Simulate a random pause *between* batches (e.g., 0.5 to 2.0 seconds)
         time.sleep(random.uniform(0.5, 2.0))
         
-        # Get a new random batch size for the next batch
         current_batch_size = random.randint(5, 15)
-        batch_sent_count = 0 # Reset batch counter
+        batch_sent_count = 0 
 
-# --- 3. Flush any remaining messages ---
 # This catches the last few messages that didn't fill a full batch
 if batch_sent_count > 0:
     print(f"📤 Flushed final batch of {batch_sent_count} messages. (Total: {total_sent})")
