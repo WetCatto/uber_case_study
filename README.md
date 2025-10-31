@@ -42,13 +42,18 @@ uber_case_study/
 
 ## 🚀 Quick Start
 
-### 1. Setup Environment
+### 1. Prerequisites
 
-Run the setup script to install dependencies and start all services:
+This project requires **Docker** to run the pipeline's services.
 
+- Please install **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** (or Docker Engine on Linux) before you begin.
+
+### 2. Setup & Run
+
+**1. Start Services**
+This single command starts Kafka, Zookeeper, and Postgres in the background.
 ```bash
-chmod +x script.sh
-./script.sh
+docker compose up -d
 ```
 
 This will:
@@ -63,26 +68,20 @@ This will:
 
 ### 3. Run the Pipeline
 
-Open **3 separate terminal windows** and run each component:
+Open **3 separate terminal windows** (and make sure your virtual environment is activated in each one):
 
 #### Terminal 1: Start Producer
 ```bash
-cd /path/to/uber_case_study
-source .venv/bin/activate
 python producer/producer.py
 ```
 
 #### Terminal 2: Start Consumer
 ```bash
-cd /path/to/uber_case_study
-source .venv/bin/activate
 python consumer/consumer.py
 ```
 
 #### Terminal 3: Start Dashboard
 ```bash
-cd /path/to/uber_case_study
-source .venv/bin/activate
 streamlit run dashboard/app.py
 ```
 
@@ -106,13 +105,13 @@ Once everything is running, you can access:
 To stop all services:
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 To stop and remove volumes (deletes all data):
 
 ```bash
-docker-compose down -v
+docker compose down -v
 ```
 
 To deactivate virtual environment:
@@ -137,8 +136,11 @@ Core Python packages (see `requirements.txt`):
 ### Issue: "Module not found"
 **Solution:** Make sure virtual environment is activated:
 ```bash
+# On macOS/Linux:
 source .venv/bin/activate
-pip install -r requirements.txt
+
+# On Windows:
+.venv\Scripts\activate.bat
 ```
 
 ### Issue: Dashboard shows no data
