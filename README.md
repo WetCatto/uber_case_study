@@ -76,11 +76,11 @@ docker exec kafka kafka-topics \
   --if-not-exists
 ```
 
-2. Create Python Environment
+3. Create Python Environment
 ```Bash
 python -m venv .venv
 ```
-3. Activate Environment
+4. Activate Environment
 Windows
 ```Bash
 # On Command Prompt
@@ -93,11 +93,11 @@ On macOS & Linux:
 ```Bash
 source .venv/bin/activate
 ```
-4. Install Dependencies
+5. Install Dependencies
 ```Bash
 pip install -r requirements.txt
 ```
-5. Initialize Database This script connects to the Postgres container and creates the rides table.
+6. Initialize Database This script connects to the Postgres container and creates the rides table.
 ```Bash
 python init_database.py
 ```
