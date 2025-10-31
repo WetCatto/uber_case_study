@@ -88,8 +88,11 @@ pip install -r requirements.txt
 ```
 5. Initialize Database This script connects to the Postgres container and creates the rides table.
 ```Bash
-python init_database.py### 3. Run the Pipeline
+python init_database.py
 ```
+
+### 3. Run the Pipeline
+
 
 Open **3 separate terminal windows** (and make sure your virtual environment is activated in each one):
 
