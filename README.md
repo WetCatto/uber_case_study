@@ -70,12 +70,12 @@ Note: Wait about 60 seconds for the services to fully initialize.
 python -m venv .venv
 ```
 3. Activate Environment
-On Windows (Command Prompt):
+Windows
 ```Bash
+# On Command Prompt
 .venv\Scripts\activate.bat
-```
-On Windows (PowerShell):
-```Bash
+
+# On PowerShell
 .venv\Scripts\Activate.ps1
 ```
 On macOS & Linux:
