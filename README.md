@@ -45,28 +45,58 @@ uber_case_study/
 ### 1. Prerequisites
 
 This project requires **Docker** to run the pipeline's services.
-
 - Please install **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** (or Docker Engine on Linux) before you begin.
 
-### 2. Setup & Run
+### 2. Setup & Run (All Systems)
+
+Follow these manual steps to get the pipeline running.
 
 **1. Start Services**
+
+Note: if you are in linux you can run:
+```bash
+chmod +x script.sh
+./script.sh
+```
+
 This single command starts Kafka, Zookeeper, and Postgres in the background.
 ```bash
 docker compose up -d
 ```
+Note: Wait about 60 seconds for the services to fully initialize.
 
-This will:
-- ✅ Create Python virtual environment
-- ✅ Install all Python dependencies from requirements.txt
-- ✅ Automatically initializes the database with the correct schema
-- ✅ Start all Docker services using docker-compose:
-  - PostgreSQL database
-  - Zookeeper
-  - Kafka broker
-  - Kafka UI
+2. Create Python Environment
 
-### 3. Run the Pipeline
+Bash
+
+python -m venv .venv
+3. Activate Environment
+
+On Windows (Command Prompt):
+
+Bash
+
+.venv\Scripts\activate.bat
+On Windows (PowerShell):
+
+Bash
+
+.venv\Scripts\Activate.ps1
+On macOS & Linux:
+
+Bash
+
+source .venv/bin/activate
+4. Install Dependencies
+
+Bash
+
+pip install -r requirements.txt
+5. Initialize Database This script connects to the Postgres container and creates the rides table.
+
+Bash
+
+python init_database.py### 3. Run the Pipeline
 
 Open **3 separate terminal windows** (and make sure your virtual environment is activated in each one):
 
