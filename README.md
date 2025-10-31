@@ -65,6 +65,17 @@ docker compose up -d
 ```
 Note: Wait about 60 seconds for the services to fully initialize.
 
+2. **Create Kafka Topic** Run this command in your terminal to create the rides_raw topic with 3 partitions for better parallelism.
+```bash
+docker exec kafka kafka-topics \
+  --create \
+  --topic rides_raw \
+  --partitions 3 \
+  --replication-factor 1 \
+  --bootstrap-server kafka:29092 \
+  --if-not-exists
+```
+
 2. Create Python Environment
 ```Bash
 python -m venv .venv
