@@ -34,7 +34,7 @@ def load_data():
     query = """
     SELECT * FROM rides
     ORDER BY pickup_datetime DESC
-    LIMIT 1000;
+    LIMIT 3000;
     """
     return pd.read_sql(query, engine)
 

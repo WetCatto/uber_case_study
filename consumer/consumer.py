@@ -55,7 +55,7 @@ try:
             print(f"💾 Stored {stored_count} rides...")
         
         # Uncomment to see each message
-        # print(f"Stored: {data}")
+        print(f"Stored: {data}")
 
 except KeyboardInterrupt:
     print("\n⚠️  Stopping consumer...")

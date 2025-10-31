@@ -2,17 +2,11 @@ import time
 import json
 import pandas as pd
 from confluent_kafka import Producer
+import random  # <--- 1. Import random
 
 # Kafka Producer configuration
 KAFKA_BROKER = "localhost:9092" 
 TOPIC_NAME = "rides_raw"
-
-# Initialize Kafka producer
-conf = {
-    'bootstrap.servers': KAFKA_BROKER,
-    'client.id': 'uber-producer',
-    'enable.idempotence': True
-}
 
 # Load dataset
 print("📂 Loading dataset...")
@@ -22,7 +16,8 @@ print(f"✅ Loaded {len(df)} records")
 # Initialize Kafka producer
 conf = {
     'bootstrap.servers': KAFKA_BROKER,
-    'client.id': 'uber-producer'
+    'client.id': 'uber-producer',
+    'enable.idempotence': True
 }
 producer = Producer(conf)
 
@@ -38,7 +33,11 @@ print("🚗 Kafka Producer started. Streaming Uber ride data...")
 print(f"📊 Sending to topic: {TOPIC_NAME}")
 print("-" * 60)
 
-sent_count = 0
+# --- 2. New batch-sending logic ---
+total_sent = 0
+batch_sent_count = 0
+# Get the first random batch size
+current_batch_size = random.randint(5, 15)
 
 for _, row in df.iterrows():
     message = {
@@ -62,20 +61,28 @@ for _, row in df.iterrows():
         callback=delivery_report
     )
     
-    sent_count += 1
+    batch_sent_count += 1
+    total_sent += 1
     
-    # Print progress every 100 messages
-    if sent_count % 100 == 0:
-        print(f"📤 Sent {sent_count} messages...")
+    # Check if we've completed the current random batch
+    if batch_sent_count == current_batch_size:
+        print(f"📤 Flushed batch of {batch_sent_count} messages. (Total: {total_sent})")
         producer.flush()
-    
-    # Simulate live feed
-    time.sleep(0.2)
+        
+        # Simulate a random pause *between* batches (e.g., 0.5 to 2.0 seconds)
+        time.sleep(random.uniform(0.5, 2.0))
+        
+        # Get a new random batch size for the next batch
+        current_batch_size = random.randint(5, 15)
+        batch_sent_count = 0 # Reset batch counter
 
-# Wait for all messages to be delivered
-producer.flush()
+# --- 3. Flush any remaining messages ---
+# This catches the last few messages that didn't fill a full batch
+if batch_sent_count > 0:
+    print(f"📤 Flushed final batch of {batch_sent_count} messages. (Total: {total_sent})")
+    producer.flush()
 
 print("-" * 60)
-print(f"✅ Finished streaming {sent_count} Uber rides!")
+print(f"✅ Finished streaming {total_sent} Uber rides!")
 print(f"📊 Topic: {TOPIC_NAME}")
 print(f"🔗 Kafka Broker: {KAFKA_BROKER}")
