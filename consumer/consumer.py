@@ -64,4 +64,3 @@ finally:
     consumer.close()
     print("-" * 60)
     print(f"✅ Consumer stopped. Total stored: {stored_count} rides")
-    print("👋 Goodbye!")
