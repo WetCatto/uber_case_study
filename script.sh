@@ -42,13 +42,26 @@ fi
 
 # Stop existing containers (both docker-compose and standalone)
 echo "🧹 Stopping existing containers..."
-docker-compose down 2>/dev/null || true
+docker compose down 2>/dev/null || true
 docker stop $(docker ps -aq) 2>/dev/null || true
 docker rm $(docker ps -aq) 2>/dev/null || true
 
 # Start all services
 echo "🚀 Starting all services..."
 docker compose up -d
+
+echo "⏳ Waiting for Kafka to be ready..."
+sleep 10
+
+# Create topic with 3 partitions for better parallelism
+echo "🔧 Creating Kafka topic 'rides_raw' with 3 partitions..."
+docker exec kafka kafka-topics \
+  --create \
+  --topic rides_raw \
+  --partitions 3 \
+  --replication-factor 1 \
+  --bootstrap-server localhost:9092 \
+  --if-not-exists
 
 # ---------------------------------
 # Step 3: Initialize Database

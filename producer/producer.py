@@ -3,9 +3,16 @@ import json
 import pandas as pd
 from confluent_kafka import Producer
 
-# Kafka configuration
-KAFKA_BROKER = "localhost:9092"
+# Kafka Producer configuration
+KAFKA_BROKER = "localhost:9092" 
 TOPIC_NAME = "rides_raw"
+
+# Initialize Kafka producer
+conf = {
+    'bootstrap.servers': KAFKA_BROKER,
+    'client.id': 'uber-producer',
+    'enable.idempotence': True
+}
 
 # Load dataset
 print("📂 Loading dataset...")
