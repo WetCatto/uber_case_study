@@ -1,8 +1,8 @@
-# 🚖 Uber Real-Time Data Streaming Pipeline
+# Uber Real-Time Data Streaming Pipeline
 
 A real-time data streaming pipeline that simulates Uber ride data using Kafka, PostgreSQL, and Streamlit for live visualization.
 
-## 📋 Architecture
+## Architecture
 
 ```
 ┌─────────────┐      ┌───────┐      ┌──────────┐      ┌──────────────┐      ┌───────────┐
@@ -13,7 +13,7 @@ A real-time data streaming pipeline that simulates Uber ride data using Kafka, P
 ```
 
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Kafka**: Message streaming platform
 - **PostgreSQL**: Data storage
@@ -21,7 +21,7 @@ A real-time data streaming pipeline that simulates Uber ride data using Kafka, P
 - **Python**: Data processing (pandas, kafka-python, sqlalchemy)
 - **Docker**: Containerization for Kafka, Zookeeper, and PostgreSQL
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 uber_case_study/
@@ -40,7 +40,7 @@ uber_case_study/
 └── docker-compose.yml           # Docker services
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Prerequisites
 
@@ -122,7 +122,7 @@ python consumer/consumer.py
 streamlit run dashboard/app.py
 ```
 
-## 🌐 Access Points
+## Access Points
 
 Once everything is running, you can access:
 
@@ -130,14 +130,14 @@ Once everything is running, you can access:
 - **Kafka UI**: http://localhost:8080
 - **PostgreSQL**: localhost:5432
 
-## 📊 Features
+## Features
 
 - **Real-time streaming**: Simulates live ride data from CSV
 - **Live map visualization**: Shows ride pickup locations
 - **Auto-refresh dashboard**: Updates every 5 seconds
 - **Metrics tracking**: Total rides, passengers, and timestamps
 
-## 🧹 Cleanup
+## Cleanup
 
 To stop all services:
 
@@ -157,7 +157,7 @@ To deactivate virtual environment:
 deactivate
 ```
 
-## 📦 Dependencies
+## Dependencies
 
 Core Python packages (see `requirements.txt`):
 - pandas==2.2.3
@@ -168,7 +168,7 @@ Core Python packages (see `requirements.txt`):
 - plotly==5.24.1
 - streamlit-autorefresh==1.0.1
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Issue: "Module not found"
 **Solution:** Make sure virtual environment is activated:
@@ -185,14 +185,14 @@ source .venv/bin/activate
 
 ---
 
-## 📝 Notes
+## Notes
 
 - The producer simulates real-time data by sending records with a 0.2s delay
 - The consumer stores all incoming messages in PostgreSQL
 - The dashboard auto-refreshes every 5 seconds to show new data
 - Data is cached for 5 seconds to improve performance
 
-## 📝 Quick Reference
+## Quick Reference
 
 | Component | Command | URL |
 |-----------|---------|-----|
@@ -203,10 +203,10 @@ source .venv/bin/activate
 | Kafka UI | - | http://localhost:8080 |
 | Stop All | `docker-compose down` | - |
 
-## 🤝 Contributing
+## Contributing
 
 Feel free to submit issues or pull requests for improvements!
 
-## 📄 License
+## License
 
 This project is for educational purposes.
