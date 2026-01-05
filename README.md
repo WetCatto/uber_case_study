@@ -203,6 +203,13 @@ source .venv/bin/activate
 | Kafka UI | - | http://localhost:8080 |
 | Stop All | `docker-compose down` | - |
 
+## TODO
+
+- Delete depreciated zookeeper and use KRaft
+- Optimize the consumer to collect batch data. Replace with spark
+- Implement an H3 for aggregating geospacial data
+- Add redis for the speed layer. Keep postgres for serving layer
+
 ## Contributing
 
 Feel free to submit issues or pull requests for improvements!
